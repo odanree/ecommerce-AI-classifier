@@ -49,6 +49,28 @@ Save fine-tuned weights as `clip_finetuned.pt` in `models/` directory
 - Results → `results/`
 - Notebooks → `notebooks/`
 
+## Documentation Guidelines for AI Assistant
+**⚠️ IMPORTANT NOTES FOR COPILOT:**
+- **Do NOT create new markdown/document files unless explicitly requested by user**
+- **If user asks to create documentation:**
+  - Always place ALL documentation files in `docs/` subdirectory
+  - Never place documentation files in the root directory
+  - Exception: Only `README.md` and `LICENSE` belong in root
+- **Examples of documentation that should go to `docs/`:**
+  - API documentation
+  - Setup guides
+  - Tutorial files
+  - Configuration guides
+  - Architecture docs
+  - Any other .md files
+- **Before creating files:** Ask user for confirmation unless request is very explicit
+- **Keep root clean:** Root should only contain:
+  - `README.md` (main project documentation)
+  - `LICENSE` (license file)
+  - `requirements.txt` (dependencies)
+  - `.gitignore` (git configuration)
+  - `ecommerce-AI-classifier.code-workspace` (workspace config)
+
 ## Git Workflow (CRITICAL - ALWAYS FOLLOW)
 
 ### ⚠️ Branch Protection Rules
@@ -63,23 +85,62 @@ Save fine-tuned weights as `clip_finetuned.pt` in `models/` directory
    - Naming: `feature/<name>`, `bugfix/<name>`, `experiment/<name>`
    - Examples: `feature/multi-label-support`, `bugfix/memory-leak`
 
-3. **Development Process:**
+3. **Development Process (Correct Workflow):**
+   
+   **Step 1: Create Feature Branch from dev**
    ```bash
-   # Always start from dev
    git checkout dev
    git pull origin dev
-   
-   # Create feature branch
    git checkout -b feature/your-feature-name
+   ```
    
-   # Make changes and commit
+   **Step 2: Make Changes and Commit**
+   ```bash
    git add .
    git commit -m "feat: description of changes"
+   ```
    
-   # Push feature branch
+   **Step 3: Push Feature Branch and Create PR**
+   ```bash
    git push origin feature/your-feature-name
    
-   # Create PR: feature/your-feature-name → dev (NOT main!)
+   # Create PR: feature/your-feature-name → dev
+   gh pr create --base dev --head feature/your-feature-name
+   ```
+   
+   **Step 4: Code Review and Merge to dev**
+   ```bash
+   # After approval, squash merge to dev
+   gh pr merge <PR_NUMBER> --squash
+   ```
+   
+   **Step 5: Create Release PR (dev → main)**
+   ```bash
+   git checkout main
+   git pull origin main
+   
+   # Create PR: dev → main (for releases only)
+   gh pr create --base main --head dev --title "release: v1.0.0"
+   
+   # After approval, squash merge to main
+   gh pr merge <PR_NUMBER> --squash
+   
+   # Tag the release
+   gh release create v1.0.0 --target main
+   ```
+   
+   **Step 6: Synchronize main → dev**
+   ```bash
+   git checkout dev
+   git pull origin main
+   git push origin dev
+   ```
+   
+   **Summary of Flow:**
+   ```
+   dev → feature/branch → PR → dev (squash merge)
+      → PR → main (squash merge on release)
+      → sync main → dev
    ```
 
 4. **Commit Message Convention:**

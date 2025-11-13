@@ -99,20 +99,43 @@ This project follows a professional Git workflow with protected branches:
    - `test:` - Adding tests
    - `chore:` - Maintenance tasks
 
-4. **Push to GitHub**
+4. **Push to GitHub and create PR to dev**
    ```bash
    git push origin feature/your-feature-name
+   gh pr create --base dev --head feature/your-feature-name
    ```
 
-5. **Create Pull Request**
-   - Open PR from `feature/your-feature-name` → `dev`
-   - **Never** create PR directly to `main`
-   - Request code review
-   - Address feedback
+5. **Code review and squash merge to dev**
+   ```bash
+   gh pr merge <PR_NUMBER> --squash
+   ```
 
-6. **After PR approval**
-   - Maintainer will merge to `dev`
-   - Periodically, `dev` will be merged to `main` for releases
+6. **For releases: Create PR from dev → main**
+   ```bash
+   git checkout main
+   git pull origin main
+   gh pr create --base main --head dev --title "release: v1.0.0"
+   
+   # After approval, squash merge to main
+   gh pr merge <PR_NUMBER> --squash
+   
+   # Tag the release
+   gh release create v1.0.0 --target main
+   ```
+
+7. **Synchronize main → dev**
+   ```bash
+   git checkout dev
+   git pull origin main
+   git push origin dev
+   ```
+
+### Complete Workflow
+```
+dev → feature/branch → PR → dev (squash merge)
+   → PR → main (squash merge on release)
+   → sync main → dev
+```
 
 ### Branch Protection Rules
 - `main`: Requires PR approval, no direct commits

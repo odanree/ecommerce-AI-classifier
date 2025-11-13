@@ -220,6 +220,73 @@ def train_model(data_loader, epochs, learning_rate):
 
 ### Submitting a Pull Request
 
+1. **Create PR to dev branch**
+   ```bash
+   gh pr create --base dev --head feature/your-feature-name
+   ```
+
+2. **Fill out PR template**
+   - Description of changes
+   - Related issues (if any)
+   - Testing done
+   - Screenshots (for UI changes)
+
+3. **PR Title Format**
+   ```
+   [Type] Brief description of changes
+   ```
+   
+   Examples:
+   - `[Feature] Add multi-label classification support`
+   - `[Fix] Resolve memory leak in data loader`
+   - `[Docs] Update installation instructions`
+
+### PR Review and Merge Process
+
+1. **Automated checks**: CI/CD must pass
+2. **Code review**: At least one maintainer approval required
+3. **Address feedback**: Make requested changes
+4. **Squash and merge to dev**
+   ```bash
+   gh pr merge <PR_NUMBER> --squash
+   ```
+
+### Release Workflow (dev → main)
+
+1. **Create PR from dev to main** (for releases only)
+   ```bash
+   git checkout main
+   git pull origin main
+   gh pr create --base main --head dev --title "release: v1.0.0"
+   ```
+
+2. **Get approval and squash merge to main**
+   ```bash
+   gh pr merge <PR_NUMBER> --squash
+   ```
+
+3. **Tag the release**
+   ```bash
+   gh release create v1.0.0 --target main
+   ```
+
+4. **Synchronize main back to dev**
+   ```bash
+   git checkout dev
+   git pull origin main
+   git push origin dev
+   ```
+
+### Complete Git Workflow
+
+```
+dev → feature/branch → PR → dev (squash merge)
+   → (for releases) dev → PR → main (squash merge)
+   → sync main → dev
+```
+
+### Submitting a Pull Request
+
 1. **Go to GitHub and create PR**
    - Base branch: `dev` (not `main`)
    - Compare branch: your feature branch
