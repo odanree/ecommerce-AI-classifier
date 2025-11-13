@@ -49,6 +49,28 @@ Save fine-tuned weights as `clip_finetuned.pt` in `models/` directory
 - Results → `results/`
 - Notebooks → `notebooks/`
 
+## Documentation Guidelines for AI Assistant
+**⚠️ IMPORTANT NOTES FOR COPILOT:**
+- **Do NOT create new markdown/document files unless explicitly requested by user**
+- **If user asks to create documentation:**
+  - Always place ALL documentation files in `docs/` subdirectory
+  - Never place documentation files in the root directory
+  - Exception: Only `README.md` and `LICENSE` belong in root
+- **Examples of documentation that should go to `docs/`:**
+  - API documentation
+  - Setup guides
+  - Tutorial files
+  - Configuration guides
+  - Architecture docs
+  - Any other .md files
+- **Before creating files:** Ask user for confirmation unless request is very explicit
+- **Keep root clean:** Root should only contain:
+  - `README.md` (main project documentation)
+  - `LICENSE` (license file)
+  - `requirements.txt` (dependencies)
+  - `.gitignore` (git configuration)
+  - `ecommerce-AI-classifier.code-workspace` (workspace config)
+
 ## Git Workflow (CRITICAL - ALWAYS FOLLOW)
 
 ### ⚠️ Branch Protection Rules
