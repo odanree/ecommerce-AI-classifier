@@ -59,14 +59,14 @@ ecommerce-AI-classifier/
 
 **Note**: Keep only `README.md` and `LICENSE` in the root directory. All other documentation goes in `docs/`, and project files in their respective subdirectories.
 
-## � Git Workflow
+## 🔀 Git Workflow
 
 **⚠️ IMPORTANT: DO NOT commit directly to `main` branch!**
 
-This project follows a professional Git workflow with protected branches:
+This project follows a professional Git workflow:
 
 ### Branch Structure
-- **`main`**: Production-ready, stable code (protected - no direct commits)
+- **`main`**: Production-ready, stable code (for releases only)
 - **`dev`**: Integration branch for development (merge target for features)
 - **`feature/<name>`**: New features (e.g., `feature/multi-label-support`)
 - **`bugfix/<name>`**: Bug fixes (e.g., `bugfix/memory-leak`)
@@ -136,11 +136,6 @@ dev → feature/branch → PR → dev (squash merge)
    → PR → main (squash merge on release)
    → sync main → dev
 ```
-
-### Branch Protection Rules
-- `main`: Requires PR approval, no direct commits
-- `dev`: Requires PR from feature branches
-- All PRs must pass CI/CD checks
 
 For detailed contribution guidelines, see [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md).
 
