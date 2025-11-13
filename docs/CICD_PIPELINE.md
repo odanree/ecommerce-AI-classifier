@@ -6,11 +6,38 @@ This project uses GitHub Actions to automate testing, linting, security checks, 
 
 ## Workflows
 
+### Workflow Strategy
+
+This project uses a **two-tier CI/CD approach**:
+
+**Main Branch (Production)**
+- Full CI pipeline: tests + linting + security
+- Runs on: PRs and merges to `main`
+- Requirement: All checks must pass before merging
+- Purpose: Ensure code quality for releases
+
+**Dev Branch (Development)**
+- Lightweight checks: linting + security only (no tests)
+- Runs on: pushes and PRs to `dev`
+- Requirement: Informational only (doesn't block merge)
+- Purpose: Catch style and security issues early, keep pipeline fast
+
+**Feature Branches**
+- Developers test locally before pushing
+- Code reviewed on dev before promotion to main
+
+**Release Process**
+- Create PR from dev → main
+- Full CI pipeline runs automatically
+- Once approved and passing, merge and tag for release
+
+This approach balances code quality with development velocity.
+
 ### 1. CI Pipeline (`ci.yml`)
 
 **Triggers:** 
-- Push to `main` or `dev` branches
-- Pull requests to `main` or `dev` branches
+- Push to `main` branch
+- Pull requests to `main` branch
 
 **Jobs:**
 - **Tests** (Matrix: Python 3.9, 3.10, 3.11)
@@ -32,10 +59,28 @@ This project uses GitHub Actions to automate testing, linting, security checks, 
 - Per-module coverage tracked
 - HTML reports generated
 
-### 2. PR Validation (`pr-validation.yml`)
+### 2. Dev Quality Checks (`dev-quality.yml`)
+
+**Triggers:**
+- Push to `dev` branch
+- Pull requests to `dev` branch
+
+**Lightweight Jobs:**
+- **Linting**
+  - Format check with black
+  - Code style check with flake8
+  - Import sorting with isort
+
+- **Security**
+  - Vulnerability scan with bandit
+  - Dependency check with safety
+
+**Note:** Informational only - doesn't block merges. Designed for fast feedback during development.
+
+### 3. PR Validation (`pr-validation.yml`)
 
 **Triggers:** 
-- Pull requests to `main` or `dev` (opened, synchronize, reopened)
+- Pull requests to `main` (opened, synchronize, reopened)
 
 **Validation Checks:**
 - ✅ PR title follows conventional commit format
@@ -51,7 +96,7 @@ Types: feat, fix, docs, style, refactor, test, chore
 Example: feat(training): add learning rate scheduler
 ```
 
-### 3. Release Workflow (`release.yml`)
+### 4. Release Workflow (`release.yml`)
 
 **Triggers:**
 - Push to `main` branch with version tags (v*.*)
