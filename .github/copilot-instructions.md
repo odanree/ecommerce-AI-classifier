@@ -73,19 +73,16 @@ Save fine-tuned weights as `clip_finetuned.pt` in `models/` directory
 
 ## Git Workflow (CRITICAL - ALWAYS FOLLOW)
 
-### ⚠️ Branch Protection Rules
-**NEVER commit directly to `main` branch!**
-
 1. **Main Branches:**
-   - `main` (production-ready, stable) - **PROTECTED: No direct commits**
-   - `dev` (integration, latest development) - Merge target for features
+   - `main` (production-ready, stable) - **PROTECTED: Requires PR to merge**
+   - `dev` (integration, latest development) - No protection, direct commits allowed
 
 2. **Feature Branches:**
    - Create a new branch for each feature, bugfix, or experiment
    - Naming: `feature/<name>`, `bugfix/<name>`, `experiment/<name>`
    - Examples: `feature/multi-label-support`, `bugfix/memory-leak`
 
-3. **Development Process (Correct Workflow):**
+3. **Development Process:**
    
    **Step 1: Create Feature Branch from dev**
    ```bash
