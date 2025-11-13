@@ -63,11 +63,11 @@ ecommerce-AI-classifier/
 
 **⚠️ IMPORTANT: DO NOT commit directly to `main` branch!**
 
-This project follows a professional Git workflow:
+This project follows a professional Git workflow with `main` protected for releases:
 
 ### Branch Structure
-- **`main`**: Production-ready, stable code (for releases only)
-- **`dev`**: Integration branch for development (merge target for features)
+- **`main`**: Production-ready, stable code (protected - requires PR to merge)
+- **`dev`**: Integration branch for development (no protection, direct commits allowed)
 - **`feature/<name>`**: New features (e.g., `feature/multi-label-support`)
 - **`bugfix/<name>`**: Bug fixes (e.g., `bugfix/memory-leak`)
 - **`experiment/<name>`**: Experimental changes

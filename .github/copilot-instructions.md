@@ -74,8 +74,8 @@ Save fine-tuned weights as `clip_finetuned.pt` in `models/` directory
 ## Git Workflow (CRITICAL - ALWAYS FOLLOW)
 
 1. **Main Branches:**
-   - `main` (production-ready, stable) - Reserve for releases only
-   - `dev` (integration, latest development) - Merge target for features
+   - `main` (production-ready, stable) - **PROTECTED: Requires PR to merge**
+   - `dev` (integration, latest development) - No protection, direct commits allowed
 
 2. **Feature Branches:**
    - Create a new branch for each feature, bugfix, or experiment
